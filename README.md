@@ -34,11 +34,12 @@ Bu projenin açık kaynak olması, topluluğun aktif katılımını teşvik etme
 
 4. .env.example dosyasını kopyalayarak .env dosyasını oluşturun ve gerekli ayarları yapın.
 
-5. Uygulama anahtarını oluşturun:
+5. Uygulama veritabanını oluşturun:
 
    ```bash
-   php artisan key:generate
+   database/database.sqlite
    ```
+   Adında bir dosya oluşturun.
 
 6. Veritabanını oluşturun:
 
