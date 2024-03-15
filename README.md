@@ -34,6 +34,16 @@ Bu projenin açık kaynak olması, topluluğun aktif katılımını teşvik etme
 
 4. .env.example dosyasını kopyalayarak .env dosyasını oluşturun ve gerekli ayarları yapın.
 
+  ```bash
+   DB_CONNECTION=sqlite
+   # DB_HOST=127.0.0.1
+   # DB_PORT=3306
+   # DB_DATABASE=laravel
+   # DB_USERNAME=root
+   # DB_PASSWORD=
+   ```
+   Bu şekilde güncelleyin
+
 5. Uygulama veritabanını oluşturun:
 
    ```bash
@@ -41,13 +51,19 @@ Bu projenin açık kaynak olması, topluluğun aktif katılımını teşvik etme
    ```
    Adında bir dosya oluşturun.
 
-6. Veritabanını oluşturun:
+6. Proje için uygulama anahtarı oluşturun:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+7. Veritabanını oluşturun:
 
    ```bash
    php artisan migrate
    ```
 
-7. Geliştirme sunucusunu başlatın:
+8. Geliştirme sunucusunu başlatın:
 
    ```bash
    php artisan serve
