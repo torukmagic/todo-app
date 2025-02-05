@@ -5,6 +5,7 @@ body {
     padding: 0;
     margin: 0;
 }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -33,6 +34,22 @@ input {
     width: 50%;
 }
 
+.input-area form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-area input {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: #fe6d0d;
+}
+
 button {
     padding: 10px 20px;
     border: 1px solid #ccc;
@@ -41,12 +58,11 @@ button {
     cursor: pointer;
     margin-left: 1rem;
     transition: 0.3s;
-    
 }
 
-button:hover {
-    background-color: #ddd;
-}
+    button:hover {
+        background-color: #ddd;
+    }
 
 .list-area {
     width: 50%;
@@ -66,12 +82,11 @@ li {
     flex-wrap: wrap;
 }
 
-.buttons{
+.buttons {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-.updated-details{
-    
+.updated-details {
 }

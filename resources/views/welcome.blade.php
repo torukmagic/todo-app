@@ -4,7 +4,6 @@ use function Livewire\Volt\state;
 use App\Models\Todo;
 
 state(description: '', todos: fn() => Todo::all(), editingTodo: null, showAddForm: true);
-
 state(plannedDate: null);
 
 $toggleCalendar = function () {
@@ -42,7 +41,7 @@ $editTodo = function ($id) {
     $this->showAddForm = false;
     $todo = Todo::find($id);
     $this->description = $todo->description;
-    $this->plannedDate = $todo->plannedDate;
+    $this->plannedDate = $todo->planned_at;
 };
 
 $updateTodo = function ($id) {
@@ -53,9 +52,7 @@ $updateTodo = function ($id) {
     $todo = Todo::find($id);
     $todo->update([
         'description' => $this->description,
-
         'updated_at' => now(),
-
         'planned_at' => $this->plannedDate
     ]);
     $this->description = '';
@@ -69,7 +66,6 @@ $updateTodo = function ($id) {
         return $item;
     });
 };
-
 ?>
 
 <html>
@@ -87,12 +83,20 @@ $updateTodo = function ($id) {
                 <div class="input-area">
                     <span style="color:#0b105d;"><h1>Yapılacak iş ekle</h1></span>
                     <form wire:submit="{{ $editingTodo ? 'updateTodo(' . $editingTodo . ')' : 'addTodo' }}">
-                        <input type="text" wire:model="description">
-                        <input type="datetime-local" wire:model="plannedDate">
-                        <button type="submit">{{ $editingTodo ? 'Düzenle' : 'Ekle' }}</button>
+                        <input type="text" wire:model="description" placeholder="Yapılacak işi girin">
+
+                        <label for="plannedDate" style="margin-top: 10px; font-weight: bold; display: block;">
+                            Yapılacak işin planlanan zamanı:
+                        </label>
+                        <input type="datetime-local" id="plannedDate" wire:model="plannedDate">
+
+                        <button type="submit" style="margin-top: 10px;">
+                            {{ $editingTodo ? 'Düzenle' : 'Ekle' }}
+                        </button>
                     </form>
                 </div>
             @endif
+
             <span style="color:#0b105d;"><h1>Yapılacak işler</h1></span>
             <ul class="list-area">
                 @foreach ($todos as $todo)
@@ -104,7 +108,11 @@ $updateTodo = function ($id) {
                                 <span style="font-family:Cursive; color:#fe6d0d;"> <ins>Güncellenen zaman:</ins> {{ optional($todo->updated_at)->format('d-m-Y H:i') }}</span>
                             @endif
                         </div>
-                        <span style="font-family:Cursive; color:#ffb47c; border:2px solid black; border-style:dotted; padding:4px; border-color:#8386ad;">Planlanan zaman: {{ \Carbon\Carbon::parse($todo->planned_at)->format('d-m-Y H:i') }}</span>
+
+                        <span style="font-family:Cursive; color:#ffb47c; border:2px solid black; border-style:dotted; padding:4px; border-color:#8386ad;">
+                            Planlanan zaman: {{ \Carbon\Carbon::parse($todo->planned_at)->format('d-m-Y H:i') }}
+                        </span>
+
                         @if ($editingTodo === $todo->id)
                             <input type="text" wire:model="description">
                             <input type="datetime-local" wire:model.fill="plannedDate" value="{{ \Carbon\Carbon::parse($todo->planned_at) }}">
@@ -112,7 +120,7 @@ $updateTodo = function ($id) {
                         @else
                             {{ $todo->description }}
                             <div class="buttons">
-                                <button type="button" onmouseover="this.style.backgroundColor='#3cb40cd1'" onmouseout="this.style.backgroundColor='#f4f4f4'"wire:click="editTodo({{ $todo->id }})">Düzenle</button>
+                                <button type="button" onmouseover="this.style.backgroundColor='#3cb40cd1'" onmouseout="this.style.backgroundColor='#f4f4f4'" wire:click="editTodo({{ $todo->id }})">Düzenle</button>
                                 <button type="button" onmouseover="this.style.backgroundColor='#dd2225b0'" onmouseout="this.style.backgroundColor='#f4f4f4'" wire:click="deleteTodo({{ $todo->id }})">Sil</button>
                             </div>
                         @endif
